@@ -4,6 +4,7 @@ const details = document.querySelector('.details');
 const time=document.querySelector('img.time');
 const icon = document.querySelector('.icon img');
 const error=document.querySelector('.error');
+const inputBox=document.querySelector('.input-box');
 const updateCity = async (city)=> {
     const cityDets = await getCity(city);
     let weather=undefined;
@@ -58,7 +59,7 @@ const updateUI = (data)=>{
 
 cityForm.addEventListener('submit',e=>{
     e.preventDefault();
-
+    inputBox.blur();
     //get city value
     const city = cityForm.city.value.trim();
     cityForm.reset();
