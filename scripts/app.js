@@ -3,9 +3,12 @@ const card = document.querySelector('.card');
 const details = document.querySelector('.details');
 const time=document.querySelector('img.time');
 const icon = document.querySelector('.icon img');
+const error=document.querySelector('.error');
 const updateCity = async (city)=> {
     const cityDets = await getCity(city);
-    const weather = await getWeather(cityDets.Key);
+    let weather=undefined;
+    if(cityDets)
+    weather = await getWeather(cityDets.Key);
     return { cityDets, weather };
 };
 
@@ -16,7 +19,16 @@ const updateUI = (data)=>{
 
     //destructure properties i.e creating variables from object properties
     const {cityDets,weather} = data;
-
+    //checking if location not found by the api
+    if(!cityDets){
+        
+        card.classList.add('d-none');
+        error.textContent='Location not available :(';
+        error.classList.remove('d-none');
+        return;
+    }
+    //if location found hide error div
+    error.classList.add('d-none');
     //update details on the template
     details.innerHTML = `
         <h5 class="my-3">${cityDets.EnglishName}</h5>
