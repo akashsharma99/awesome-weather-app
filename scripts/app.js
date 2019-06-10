@@ -14,22 +14,17 @@ const updateCity = async (city)=> {
 };
 
 const updateUI = (data)=>{
-    // console.log(data);
-    // const cityDets = data.cityDets;
-    // const weather = data.weather;
-
+    
+    document.querySelector('.loader').classList.add('d-none');
     //destructure properties i.e creating variables from object properties
     const {cityDets,weather} = data;
     //checking if location not found by the api
     if(!cityDets){
-        
-        card.classList.add('d-none');
         error.textContent='Location not available :(';
         error.classList.remove('d-none');
         return;
     }
-    //if location found hide error div
-    error.classList.add('d-none');
+    
     //update details on the template
     details.innerHTML = `
         <h5 class="my-3">${cityDets.EnglishName}</h5>
@@ -55,9 +50,10 @@ const updateUI = (data)=>{
 
 
 
-
-
 cityForm.addEventListener('submit',e=>{
+    document.querySelector('.loader').classList.remove('d-none');
+    card.classList.add('d-none');
+    error.classList.add('d-none');
     e.preventDefault();
     inputBox.blur();
     //get city value
